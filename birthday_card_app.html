@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday — Card</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#7b1f1f;
+      --bg2:#b45a4a;
+      --card:#fff9f8;
+      --accent:#2f7a57;
+      --muted:#7b7b7b;
+      --gold:#e6bf59;
+      --shadow:0 8px 30px rgba(0,0,0,0.12);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; min-height:100vh; font-family:'Nunito',system-ui; background:linear-gradient(180deg,var(--bg1),var(--bg2)); display:flex; align-items:flex-start; justify-content:center; padding:40px; color:#222; overflow-x:hidden;
+    }
+    .container{
+      width:900px; max-width:96%; background:linear-gradient(180deg,#fff6f5,#fff6f7); border-radius:12px; padding:48px 56px; box-shadow:var(--shadow); border:3px solid rgba(230,191,89,0.12); position:relative; overflow:hidden; animation:fadeIn 1.5s ease-in-out;
+    }
+    @keyframes fadeIn{from{opacity:0; transform:translateY(40px);}to{opacity:1; transform:translateY(0);}}
+    @keyframes floatIn{from{opacity:0; transform:translateY(20px);}to{opacity:1; transform:translateY(0);}}
+    .top-icons{display:flex; gap:18px; justify-content:center; margin-bottom:8px; animation:floatIn 1.2s ease-out;}
+    .icon-badge{width:44px;height:44px;border-radius:50%;border:2px solid rgba(160,30,30,0.12);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700;font-size:20px}
+    h1{font-family:'Playfair Display',serif;color:var(--accent);font-size:64px;text-align:center;margin:6px 0 6px;animation:fadeIn 2s ease;}
+    .arabic{font-size:28px;text-align:center;direction:rtl;color:var(--accent);margin-top:8px;animation:fadeIn 2s ease 0.3s both;}
+    .trans,.sub{text-align:center;color:#6b6b6b}
+    .date{text-align:center;margin:26px 0;font-weight:700;font-size:22px;animation:fadeIn 2s ease 0.5s both;}
+    .btn{display:inline-flex;gap:10px;align-items:center;background:var(--accent);border-radius:8px;color:white;padding:10px 18px;border:none;cursor:pointer;box-shadow:0 6px 14px rgba(47,122,87,0.18);transition:0.3s;}
+    .btn:hover{transform:scale(1.05);}
+    .message-card{background:#fff;border-radius:8px;padding:26px;margin-top:28px;box-shadow:0 6px 18px rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.04);animation:floatIn 1.8s ease both;}
+    .message p{line-height:1.6;color:#333;margin:0 0 12px}
+    .message .muted{font-style:italic;color:#7a7a7a}
+    .memory{margin-top:28px;background:linear-gradient(180deg,#ffffff,#fbf7f7);border-radius:10px;padding:18px;border:2px solid rgba(230,191,89,0.12);box-shadow:0 10px 30px rgba(0,0,0,0.06);animation:fadeIn 2s ease 0.7s both;}
+    .memory h3{display:flex;align-items:center;gap:10px;justify-content:center;margin:6px 0 18px;color:var(--accent)}
+    .carousel{display:flex;align-items:center;justify-content:center;flex-direction:column}
+    .photo{width:220px;height:220px;border-radius:6px;border:2px dashed rgba(150,150,150,0.2);display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#f3eaea,#e6f0ec);color:#8a8a8a;font-weight:600;transition:transform 0.6s ease;}
+    .photo.active{transform:scale(1.1);}
+    .controls{display:flex;gap:10px;margin-top:16px}
+    .dot{width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,0.06);cursor:pointer;transition:0.3s;}
+    .dot.active{background:var(--accent);color:white;box-shadow:0 4px 10px rgba(0,0,0,0.08)}
+    .dot:hover{transform:scale(1.1);}
+    .replace{margin-top:10px;text-align:center;color:#7b7b7b;font-size:13px}
+    footer{margin-top:28px;text-align:center;color:#6a6a6a;font-style:italic;animation:fadeIn 2s ease 0.9s both;}
+    .quote-author{font-weight:700;color:#444;margin-top:6px}
+    @media(max-width:640px){h1{font-size:36px}.container{padding:28px}.photo{width:170px;height:170px}}
+    canvas#confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+    #musicBtn{position:fixed;bottom:20px;right:20px;background:var(--accent);border:none;color:white;padding:12px 18px;border-radius:30px;box-shadow:0 6px 14px rgba(0,0,0,0.15);cursor:pointer;transition:0.3s;z-index:10;}
+    #musicBtn:hover{transform:scale(1.05);background:#33996b;}
+  </style>
+</head>
+<body>
+  <canvas id="confetti"></canvas>
+  <audio id="music" autoplay loop>
+    <source src="./Song.mp3" type="audio/mpeg">
+  </audio>
+  <button id="musicBtn">🔊 Pause Music</button>
+  <div class="container" role="main">
+    <div class="top-icons">
+      <div class="icon-badge">🏅</div>
+      <div class="icon-badge">✨</div>
+      <div class="icon-badge">🏅</div>
+    </div>
+    <h1>Happy Birthday</h1>
+    <div class="arabic">بَارَكَ اللَّهُ لَكِ</div>
+    <div class="trans">Barakallahu laki</div>
+    <div class="sub">May Allah bless you</div>
+    <div class="date">🎁 October 17th 🎁</div>
+    <div style="display:flex; justify-content:center"><button id="toggleBtn" class="btn">💚 Hide Message</button></div>
+    <div id="message" class="message-card message">
+      <p>On this beautiful day, I want to celebrate the amazing person you are. Your kindness, strength, and beautiful spirit inspire everyone around you. May Allah shower you with countless blessings, fill your life with happiness, and grant you success in this world and the hereafter.</p>
+      <p class="muted">May this year bring you closer to your dreams and fill your heart with peace and joy.</p>
+    </div>
+    <section class="memory">
+      <h3>📸 Memory Lane</h3>
+      <div class="carousel">
+        <div id="photo" class="photo">Add Photo 2</div>
+        <h4 style="margin-top:14px; color:#222; text-align:center">Cherished Memories</h4>
+        <div class="controls">
+          <div class="dot" data-index="0">1</div>
+          <div class="dot" data-index="1">2</div>
+          <div class="dot active" data-index="2">3</div>
+        </div>
+        <div class="replace">Replace placeholder photos with your favorite memories together</div>
+      </div>
+    </section>
+    <footer>
+      "And He found you lost and guided you"<div class="quote-author">- Quran 93:7</div>
+    </footer>
+  </div>
+  <script>
+    const btn=document.getElementById('toggleBtn');
+    const msg=document.getElementById('message');
+    let visible=true;
+    btn.addEventListener('click',()=>{visible=!visible;msg.style.display=visible?'block':'none';btn.textContent=visible?'💚 Hide Message':'💚 Show Message';});
+
+    const photo=document.getElementById('photo');
+    const dots=document.querySelectorAll('.dot');
+    const placeholders = [
+    '<img src="./P1.png" alt="Memory 1" style="width:100%;height:100%;object-fit:cover;border-radius:6px;">',
+    '<img src="./P2.png" alt="Memory 2" style="width:100%;height:100%;object-fit:cover;border-radius:6px;">',
+    '<img src="./P3.png" alt="Memory 3" style="width:100%;height:100%;object-fit:cover;border-radius:6px;">'
+];
+
+    let idx=2;
+    function updateCarousel(){photo.innerHTML=placeholders[idx];photo.classList.add('active');setTimeout(()=>photo.classList.remove('active'),600);dots.forEach(d=>d.classList.toggle('active',Number(d.dataset.index)===idx));}
+    dots.forEach(d=>d.addEventListener('click',()=>{idx=Number(d.dataset.index);updateCarousel();}));
+    updateCarousel();
+
+    const canvas=document.getElementById('confetti');
+    const ctx=canvas.getContext('2d');
+    let W=window.innerWidth,H=window.innerHeight;
+    canvas.width=W;canvas.height=H;
+    const confettiCount=120;
+    const confetti=[];
+    for(let i=0;i<confettiCount;i++){
+      confetti.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*6+2,d:Math.random()*10+10,color:`hsl(${Math.random()*360},70%,60%)`,tilt:Math.random()*10-10});
+    }
+    function draw(){ctx.clearRect(0,0,W,H);confetti.forEach(c=>{ctx.beginPath();ctx.fillStyle=c.color;ctx.ellipse(c.x,c.y,c.r,c.r/2,Math.PI/4,0,2*Math.PI);ctx.fill();});update();requestAnimationFrame(draw);}
+    function update(){confetti.forEach(c=>{c.y+=Math.sin(c.d/10)+1;c.x+=Math.sin(c.tilt/10);if(c.y>H){c.y=0;c.x=Math.random()*W;}})}
+    draw();
+    window.addEventListener('resize',()=>{W=window.innerWidth;H=window.innerHeight;canvas.width=W;canvas.height=H;});
+
+    // Music toggle button
+    const music=document.getElementById('music');
+    const musicBtn=document.getElementById('musicBtn');
+    let playing=true;
+    musicBtn.addEventListener('click',()=>{
+      if(playing){
+        music.pause();
+        musicBtn.textContent='🔈 Play Music';
+      } else {
+        music.play();
+        musicBtn.textContent='🔊 Pause Music';
+      }
+      playing=!playing;
+    });
+    document.addEventListener('click', () => {
+      if (music.paused) {
+        music.play().catch(err => console.log("Autoplay blocked:", err));
+      }
+    }, { once: true });
+
+  </script>
+</body>
+</html>
